@@ -1,1 +1,18 @@
-
+services:
+  - type: web
+    name: cinema-telegram-bot
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: HF_API_TOKEN
+        sync: false
+      - key: WEBHOOK_URL
+        fromService:
+          type: web
+          name: cinema-telegram-bot
+          property: host
+      - key: PYTHON_VERSION
+        value: "3.11.9"
